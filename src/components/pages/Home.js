@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import { Header, Footer } from '../molecules';
 import { ContainerStyled } from '../atom';
 import HeroImg from '../../asset/images/hero-image.jpg';
 import ServiceCard from '../molecules/ServiceCard';
@@ -41,52 +39,27 @@ const services = [
  */
 const Home = () => {
   return (
-    <>
-      <Header>
-        <NavLink to="/">
-          <img
-            src="https://image.flaticon.com/icons/svg/660/660503.svg"
-            alt="logo"
-          />
-        </NavLink>
-
-        <ul>
-          <li>
-            <NavLink to="/signup">Signup</NavLink>
-          </li>
-          <li>
-            <NavLink to="/login">login</NavLink>
-          </li>
-        </ul>
-      </Header>
-
-      <main>
-        <HeroContainerStyled>
-          <ContainerStyled>
-            <p>
-              Welcome to Lake Tahoe, Lake Tahoe is a large freshwater lake in
-              the Sierra Nevada Mountains, straddling the border of California
-              and Nevada. It’s known for its beaches and ski resorts. On the
-              southwest shore, Emerald Bay State Park contains the 1929
-              Nordic-style mansion Vikingsholm.
-            </p>
-          </ContainerStyled>
-        </HeroContainerStyled>
-
+    <main>
+      <HeroContainerStyled>
         <ContainerStyled>
-          <MainWrapper>
-            {services.map((service) => (
-              <ServiceCard key={service.id} {...service} />
-            ))}
-          </MainWrapper>
+          <p>
+            Welcome to Lake Tahoe, Lake Tahoe is a large freshwater lake in the
+            Sierra Nevada Mountains, straddling the border of California and
+            Nevada. It’s known for its beaches and ski resorts. On the southwest
+            shore, Emerald Bay State Park contains the 1929 Nordic-style mansion
+            Vikingsholm.
+          </p>
         </ContainerStyled>
-      </main>
+      </HeroContainerStyled>
 
-      <Footer>
-        <p>&copy; 2020</p>
-        <p>Made by Yemi</p>
-      </Footer>
-    </>
+      <ContainerStyled>
+        <MainWrapper>
+          {services.map((service) => (
+            <ServiceCard key={service.id} {...service} />
+          ))}
+        </MainWrapper>
+      </ContainerStyled>
+    </main>
   );
 };
 

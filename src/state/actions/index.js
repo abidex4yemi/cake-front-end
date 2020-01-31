@@ -59,10 +59,7 @@ export const login = (credentials) => (dispatch, getState, api) => {
 
       dispatch({
         type: LOGGED_IN,
-        payload: {
-          ...res.data.body,
-          auth: true
-        }
+        payload: res.data.body
       });
 
       return res;

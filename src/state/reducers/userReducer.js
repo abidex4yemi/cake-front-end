@@ -10,7 +10,6 @@ import {
 const initialState = {
   user: null,
   creatingProfile: false,
-  auth: false,
   loginIn: false,
   updatingProfile: false
 };

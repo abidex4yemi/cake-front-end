@@ -8,7 +8,15 @@ import {
 } from '../../atom';
 
 export const Input = (props) => {
-  const { type, inputChange, error, labelText, name, value } = props;
+  const {
+    type,
+    inputChange,
+    error,
+    labelText,
+    name,
+    value,
+    placeholder
+  } = props;
 
   const handleInputChange = (evt) => {
     const field = evt.target.name;
@@ -25,6 +33,7 @@ export const Input = (props) => {
         onChange={handleInputChange}
         name={name}
         value={value}
+        placeholder={placeholder}
       />
       <SmallStyled>{error || ''}</SmallStyled>
     </InputGroupStyled>
@@ -36,6 +45,9 @@ Input.propTypes = {
   inputChange: PropTypes.func.isRequired,
   error: PropTypes.string,
   labelText: PropTypes.string,
-  name: PropTypes.string.isRequired,
   value: PropTypes.any
+};
+
+Input.defaultProps = {
+  name: ''
 };

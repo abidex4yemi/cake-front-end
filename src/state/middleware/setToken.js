@@ -3,6 +3,7 @@ export const setToken = (store) => (next) => (action) => {
   let token = '';
 
   if (action.type === 'CREATE_PROFILE') {
+    console.log(action.payload);
     token = action.payload.token;
     // Save token to local storage
     localStorage.setItem('token', token);

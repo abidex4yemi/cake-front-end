@@ -1,5 +1,5 @@
 const validateProfileForm = (profile) => {
-  const errors = {};
+  let errors = {};
   const ProfileData = Object.entries(profile);
 
   for (let [key, value] of ProfileData) {
@@ -11,23 +11,25 @@ const validateProfileForm = (profile) => {
       ) {
         errors[key] = `all ${key} are required`;
       } else {
-        errors[key] = '';
+        delete errors[key];
       }
     } else if (typeof value === 'string') {
       if (value.trim() === '') {
         errors[key] = `${key.toLowerCase()} is required`;
       } else {
-        errors[key] = '';
+        delete errors[key];
+      }
+
+      if (key === 'password' && value.trim().length < 6) {
+        errors.password = 'password must be at least six(6) characters';
       }
     }
   }
 
   if (profile.password !== profile.confirmPassword) {
     errors.confirmPassword = 'password does not match';
-  }
-
-  if (Object.keys(errors).length) {
-    return errors;
+  } else {
+    delete errors.confirmPassword;
   }
 
   return errors;

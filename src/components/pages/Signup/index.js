@@ -15,7 +15,7 @@ import validateProfileForm from '../../../util/validateProfileForm';
  * @returns {Object}
  */
 const Signup = (props) => {
-  const { creatingProfile } = props;
+  const { creatingProfile } = props.data;
 
   const [profile, setProfileValue] = useState({
     showSecurityQuestions: true,
@@ -79,20 +79,38 @@ const Signup = (props) => {
     evt.preventDefault();
     const errors = validateProfileForm(profile);
 
-    if (Object.keys(errors).length) {
-      setErrors((prevState) => ({
-        ...prevState,
-        ...errors
-      }));
+    setErrors(() => errors);
 
+    if (Object.values(errors).length) {
       return;
     }
 
-    // props.createProfile(profile).then((res) => {
-    //   if (res.data !== undefined && res.status === 201) {
-    //     return props.history.push('/dashboard');
-    //   }
-    // });
+    const {
+      firstQuestion,
+      secondQuestion,
+      thirdQuestion
+    } = profile.securityQuestions;
+
+    const profileData = {
+      ...profile,
+      securityQuestions: [firstQuestion, secondQuestion, thirdQuestion]
+    };
+
+    delete profileData.showSecurityQuestions;
+    delete profileData.confirmPassword;
+
+    props.createProfile(profileData).then((res) => {
+      if (res.data !== undefined && res.status === 201) {
+        return props.history.push('/dashboard');
+      }
+
+      if (res.response.status === 409) {
+        setErrors((prevState) => ({
+          ...prevState,
+          email: 'email already in use, please login to continue'
+        }));
+      }
+    });
   };
 
   const inputChange = (field, value) => {

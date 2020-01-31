@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { createProfile } from '../../../state/actions';
 import Profile from '../../organisms/Profile';
 import validateProfileForm from '../../../util/validateProfileForm';
+import styled from 'styled-components';
+import { ContainerStyled } from '../../atom';
 
 /**
  * Profile `Container component`
@@ -19,6 +21,7 @@ const Signup = (props) => {
 
   const [profile, setProfileValue] = useState({
     showSecurityQuestions: true,
+    showPasswordField: true,
     firstName: '',
     lastName: '',
     password: '',
@@ -121,20 +124,31 @@ const Signup = (props) => {
   };
 
   return (
-    <Profile
-      errors={errors}
-      profile={profile}
-      inputChange={inputChange}
-      profileStatus={creatingProfile}
-      handleSubmit={handleSubmit}
-      setAvatarUrl={inputChange}
-      handleFirstQuestion={handleFirstQuestion}
-      handleSecondQuestion={handleSecondQuestion}
-      handleThirdQuestion={handleThirdQuestion}
-    />
+    <ContainerStyled>
+      <MainWrapper>
+        <Profile
+          errors={errors}
+          profile={profile}
+          inputChange={inputChange}
+          profileStatus={creatingProfile}
+          handleSubmit={handleSubmit}
+          setAvatarUrl={inputChange}
+          handleFirstQuestion={handleFirstQuestion}
+          handleSecondQuestion={handleSecondQuestion}
+          handleThirdQuestion={handleThirdQuestion}
+        />
+      </MainWrapper>
+    </ContainerStyled>
   );
 };
 
 const mapStateToProps = (state) => state;
 
 export default connect(mapStateToProps, { createProfile })(Signup);
+
+const MainWrapper = styled.section`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 4rem;
+`;

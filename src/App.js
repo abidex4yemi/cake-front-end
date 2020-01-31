@@ -8,6 +8,7 @@ import { Header, Footer } from './components/molecules';
 import { GlobalStyles } from './components/atom';
 import Home from './components/pages/Home';
 import Signup from './components/pages/Signup';
+import { Dashboard } from './components/pages/Dashboard';
 
 const App = () => {
   return (
@@ -34,6 +35,11 @@ const App = () => {
 
         <Route exact path="/" render={(props) => <Home {...props} />} />
         <Route exact path="/signup" render={(props) => <Signup {...props} />} />
+        <Route
+          exact
+          path="/dashboard"
+          render={(props) => <Dashboard {...props} />}
+        />
 
         <Footer>
           <p>&copy; 2020</p>

@@ -6,11 +6,21 @@ import {
   borderRadius,
   medium_space,
   white,
-  boxShadow
+  boxShadow,
+  InputGroupStyled,
+  SmallStyled
 } from '../atom';
 
-import { Button, Input } from '../molecules';
-import Avatar from '../molecules/Avatar';
+import { Button, Input, Avatar, SecurityQuestion } from '../molecules';
+
+const questions = [
+  'What is your oldest sibling’s middle name?',
+  'What is your car’s license plate number?',
+  'What was your first car’s make and model?',
+  'What month and day is your anniversary?',
+  'What was your first car?',
+  'What is the middle name of your oldest child?'
+];
 
 /**
  * This is a dumb component with no logic
@@ -20,6 +30,7 @@ import Avatar from '../molecules/Avatar';
  */
 const Profile = (props) => {
   const {
+    errors,
     profile,
     inputChange,
     profileStatus,
@@ -34,13 +45,17 @@ const Profile = (props) => {
           <FormContainer>
             <h3>Create Account</h3>
             <form onSubmit={handleSubmit}>
-              <Avatar setAvatarUrl={setAvatarUrl} profile={profile} />
+              <Avatar
+                setAvatarUrl={setAvatarUrl}
+                profile={profile}
+                error={errors.avatar}
+              />
 
               <Input
                 type="text"
                 name="firstName"
                 inputChange={inputChange}
-                error={profile.errors.firstName}
+                error={errors.firstName}
                 value={profile.firstName}
                 labelText="First name"
               />
@@ -49,7 +64,7 @@ const Profile = (props) => {
                 type="text"
                 name="lastName"
                 inputChange={inputChange}
-                error={profile.errors.lastName}
+                error={errors.lastName}
                 value={profile.lastName}
                 labelText="Last name"
               />
@@ -58,7 +73,7 @@ const Profile = (props) => {
                 type="email"
                 name="email"
                 inputChange={inputChange}
-                error={profile.errors.email}
+                error={errors.email}
                 value={profile.email}
                 labelText="Email"
               />
@@ -67,7 +82,7 @@ const Profile = (props) => {
                 type="password"
                 name="password"
                 inputChange={inputChange}
-                error={profile.errors.password}
+                error={errors.password}
                 value={profile.password}
                 labelText="Password"
               />
@@ -76,7 +91,7 @@ const Profile = (props) => {
                 type="password"
                 name="confirmPassword"
                 inputChange={inputChange}
-                error={profile.errors.confirmPassword}
+                error={errors.confirmPassword}
                 value={profile.confirmPassword}
                 labelText="Re-Type Password"
               />
@@ -85,7 +100,7 @@ const Profile = (props) => {
                 type="text"
                 name="phoneNumber"
                 inputChange={inputChange}
-                error={profile.errors.phoneNumber}
+                error={errors.phoneNumber}
                 value={profile.phoneNumber}
                 labelText="Phone Number"
               />
@@ -94,7 +109,7 @@ const Profile = (props) => {
                 type="text"
                 name="address"
                 inputChange={inputChange}
-                error={profile.errors.address}
+                error={errors.address}
                 value={profile.address}
                 labelText="Address"
               />
@@ -103,19 +118,49 @@ const Profile = (props) => {
                 type="date"
                 name="dateOfBirth"
                 inputChange={inputChange}
-                error={profile.errors.dateOfBirth}
+                error={errors.dateOfBirth}
                 value={profile.dateOfBirth}
                 labelText="DateOfBirth"
               />
+
+              {profile.showSecurityQuestions && (
+                <>
+                  <p>Choose three(3) security questions</p>
+                  <SmallStyled>{errors.securityQuestions || ''}</SmallStyled>
+                  <InputGroupStyled>
+                    <span>Question 1.</span>
+                    <SecurityQuestion
+                      questions={questions}
+                      getData={props.handleFirstQuestion}
+                    />
+                  </InputGroupStyled>
+
+                  <InputGroupStyled>
+                    <small>Question 2.</small>
+                    <SecurityQuestion
+                      questions={questions}
+                      getData={props.handleSecondQuestion}
+                    />
+                  </InputGroupStyled>
+
+                  <InputGroupStyled>
+                    <small>Question 3.</small>
+                    <SecurityQuestion
+                      questions={questions}
+                      getData={props.handleThirdQuestion}
+                    />
+                  </InputGroupStyled>
+                </>
+              )}
 
               <Button
                 buttonText={
                   (profileStatus && (
                     <Loader
-                      type="ThreeDots"
+                      type="TailSpin"
                       color="#f4f4f4"
-                      height={50}
-                      width={50}
+                      height={35}
+                      width={35}
                     />
                   )) ||
                   'Submit'
@@ -151,5 +196,9 @@ const FormContainer = styled.div`
   h3 {
     margin-bottom: ${medium_space};
     text-align: center;
+  }
+
+  button[type='submit'] {
+    line-height: 20px;
   }
 `;

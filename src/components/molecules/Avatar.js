@@ -2,9 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_URL } from '../../constants';
+import { SmallStyled } from './../atom';
 
-const Avatar = (props) => {
-  const { profile, setAvatarUrl } = props;
+export const Avatar = (props) => {
+  const { profile, setAvatarUrl, error } = props;
 
   const handleImageUpload = async (evt) => {
     // Not so good way of validation(test mode)
@@ -46,6 +47,7 @@ const Avatar = (props) => {
           <span></span>
         </label>
       </UploadIcon>
+      <SmallStyled>{error || ''}</SmallStyled>
     </ImageStyledContainer>
   );
 };
@@ -99,5 +101,3 @@ const StyledImage = styled.div`
     border-radius: 50%;
   }
 `;
-
-export default Avatar;

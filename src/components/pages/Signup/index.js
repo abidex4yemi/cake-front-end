@@ -85,6 +85,7 @@ const Signup = (props) => {
     setErrors(() => errors);
 
     if (Object.values(errors).length) {
+      window.scrollTo(0, 0);
       return;
     }
 
@@ -101,6 +102,7 @@ const Signup = (props) => {
 
     delete profileData.showSecurityQuestions;
     delete profileData.confirmPassword;
+    delete profileData.showPasswordField;
 
     props.createProfile(profileData).then((res) => {
       if (res.data !== undefined && res.status === 201) {

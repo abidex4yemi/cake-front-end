@@ -100,4 +100,8 @@ const FormContainer = styled.div`
   p {
     text-align: center;
   }
+
+  button[type='submit'] {
+    line-height: 20px;
+  }
 `;

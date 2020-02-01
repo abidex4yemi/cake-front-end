@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import { ContainerStyled, dark, small_font_size } from '../../atom';
 
 export const Footer = (props) => {
-  const { children } = props;
-
   return (
     <FooterStyled>
       <ContainerStyled>
-        <section>{children}</section>
+        <section>
+          <p>&copy; 2020</p>
+          <p>Made by Yemi</p>
+        </section>
       </ContainerStyled>
     </FooterStyled>
   );

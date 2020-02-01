@@ -1,3 +1,5 @@
+import { flashMessage } from 'redux-flash';
+
 export const CREATE_PROFILE = 'create_profile';
 export const CREATING_PROFILE = 'creating_profile';
 
@@ -32,7 +34,7 @@ export const updateProfile = (profileData) => (dispatch, getState, api) => {
   dispatch({ type: UPDATING_PROFILE, payload: true });
 
   return api
-    .post('/profile', profileData)
+    .put('/profile', profileData)
     .then((res) => {
       dispatch({ type: UPDATING_PROFILE, payload: false });
 
@@ -40,6 +42,9 @@ export const updateProfile = (profileData) => (dispatch, getState, api) => {
         type: UPDATE_PROFILE,
         payload: res.data.body
       });
+
+      const action = flashMessage('Profile updated successfully');
+      dispatch(action);
 
       return res;
     })

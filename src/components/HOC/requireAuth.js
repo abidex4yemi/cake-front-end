@@ -1,18 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import * as jwtDecode from 'jwt-decode';
-
-const decodeToken = () => {
-  try {
-    const token = localStorage.getItem('token');
-
-    const user = jwtDecode(token);
-
-    return user;
-  } catch (error) {
-    return error.message;
-  }
-};
+import decodeToken from '../../util/decodeToken';
 
 export default (Component) => {
   const RequireAuth = (props) => {

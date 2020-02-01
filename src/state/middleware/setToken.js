@@ -2,11 +2,10 @@ export const setToken = (store) => (next) => (action) => {
   // Get token from browser local storage
   let token = '';
 
-  if (action.type === 'CREATE_PROFILE') {
-    console.log(action.payload);
+  if (action.type === 'logged_in' || action.type === 'create_profile') {
     token = action.payload.token;
-    // Save token to local storage
-    localStorage.setItem('token', token);
+
+    localStorage.setItem('cake-user-token', token);
   }
 
   next(action);

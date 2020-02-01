@@ -14,6 +14,7 @@ import {
 } from '../../atom';
 
 import { Button } from '../../molecules';
+import Profile from '../../organisms/Profile';
 
 /**
  * This is a dumb component with no logic
@@ -22,17 +23,23 @@ import { Button } from '../../molecules';
  * @returns {object}
  */
 const Dashboard = (props) => {
-  const { toggleProfileEditCard, showEditProfile } = props;
+  const {
+    toggleProfileEditCard,
+    showEditProfile,
+    errors,
+    profile,
+    inputChange,
+    profileStatus,
+    handleSubmit,
+    setAvatarUrl
+  } = props;
 
   return (
     <DashboardStyled>
       <MainWrapper>
         <LeftAside>
           <ProfileImageContainer>
-            <img
-              src="https://img.icons8.com/color/48/000000/user-male-circle.png"
-              alt="user thumbnail"
-            />
+            <img src={profile.avatar} alt={`${profile.firstName} avatar`} />
           </ProfileImageContainer>
 
           <ActionBar>
@@ -53,7 +60,18 @@ const Dashboard = (props) => {
           </ActionBar>
         </LeftAside>
 
-        <MainSection>{showEditProfile && props.children}</MainSection>
+        <MainSection>
+          {showEditProfile && (
+            <Profile
+              errors={errors}
+              profile={profile}
+              inputChange={inputChange}
+              profileStatus={profileStatus}
+              handleSubmit={handleSubmit}
+              setAvatarUrl={setAvatarUrl}
+            />
+          )}
+        </MainSection>
       </MainWrapper>
     </DashboardStyled>
   );
@@ -88,7 +106,6 @@ const LeftAside = styled.aside`
   padding: ${medium_space};
 
   @media screen and (max-width: 760px) {
-    width: 400px;
     margin: 20px 0;
     min-height: 200px;
   }

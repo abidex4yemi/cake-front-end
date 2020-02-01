@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_URL } from '../../constants';
@@ -7,12 +7,16 @@ import { SmallStyled } from './../atom';
 export const Avatar = (props) => {
   const { profile, setAvatarUrl, error } = props;
 
+  const [uploading, setUploading] = useState(false);
+
   const handleImageUpload = async (evt) => {
     // Not so good way of validation(test mode)
     if (evt.target.files[0].size > 307200) {
       alert('File is too big!');
       evt.target.value = '';
     }
+
+    setUploading((prevState) => !prevState);
 
     const imageFile = new FormData();
     imageFile.append('file', evt.target.files[0]);
@@ -22,8 +26,28 @@ export const Avatar = (props) => {
       .post(CLOUDINARY_URL, imageFile)
       .then((res) => {
         setAvatarUrl('avatar', res.data.secure_url);
+        setUploading((prevState) => !prevState);
       })
       .catch((err) => err);
+  };
+
+  const renderUploadingButton = () => {
+    if (uploading) {
+      return <StyledUploadIcon uploading={uploading}></StyledUploadIcon>;
+    } else {
+      return (
+        <label htmlFor="file">
+          <input
+            type="file"
+            id="file"
+            aria-label="profile picture"
+            onChange={handleImageUpload}
+            accept="image/*"
+          />
+          <StyledUploadIcon></StyledUploadIcon>
+        </label>
+      );
+    }
   };
 
   return (
@@ -35,18 +59,8 @@ export const Avatar = (props) => {
         />
       </StyledImage>
 
-      <UploadIcon>
-        <label htmlFor="file">
-          <input
-            type="file"
-            id="file"
-            aria-label="profile picture"
-            onChange={handleImageUpload}
-            accept="image/*"
-          />
-          <span></span>
-        </label>
-      </UploadIcon>
+      <UploadIcon>{renderUploadingButton()}</UploadIcon>
+
       <SmallStyled>{error || ''}</SmallStyled>
     </ImageStyledContainer>
   );
@@ -57,14 +71,18 @@ const ImageStyledContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px 0;
+  margin-bottom: 20px;
 
   input::-webkit-file-upload-button {
     display: none;
   }
+`;
 
-  span::before {
-    content: 'Select profile picture';
+const StyledUploadIcon = styled.span`
+  ::before {
+    ${'' /* content: 'Select profile picture'; */}
+    content: "${(props) =>
+      props.uploading ? 'uploading...' : 'Select profile picture'}";
     display: inline-block;
     background: linear-gradient(top, #f9f9f9, #e3e3e3);
     border: 1px solid #999;
@@ -78,10 +96,10 @@ const ImageStyledContainer = styled.div`
     font-weight: 700;
     font-size: 10pt;
   }
-  span:hover::before {
+  :hover::before {
     border-color: black;
   }
-  span:active::before {
+  :active::before {
     background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
   }
 `;
@@ -91,6 +109,7 @@ const UploadIcon = styled.div`
 `;
 
 const StyledImage = styled.div`
+  margin-bottom: 20px;
   img {
     max-width: 100%;
     max-height: 100%;

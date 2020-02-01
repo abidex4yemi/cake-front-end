@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { updateProfile } from '../../../state/actions';
-import Profile from '../../organisms/Profile';
 import validateProfileForm from '../../../util/validateProfileForm';
 import Dashboard from './Dashboard';
 
@@ -16,7 +15,7 @@ import Dashboard from './Dashboard';
  * @returns {Object}
  */
 const DashboardContainer = (props) => {
-  const { updatingProfile } = props.data;
+  const { updatingProfile, user } = props.data;
 
   const [profile, setProfileValue] = useState({
     firstName: '',
@@ -28,11 +27,23 @@ const DashboardContainer = (props) => {
     dateOfBirth: ''
   });
 
-  useEffect(() => {});
+  useEffect(() => {
+    setProfileValue((prevState) => ({
+      ...prevState,
+      ...user
+    }));
+  }, [user]);
 
   const [errors, setErrors] = useState({});
 
   const [showEditProfile, setShowEditProfile] = useState(false);
+
+  const inputChange = (field, value) => {
+    setProfileValue((prevState) => ({
+      ...prevState,
+      [field]: value
+    }));
+  };
 
   const toggleProfileEditCard = () => {
     setShowEditProfile((prevState) => !prevState);
@@ -53,25 +64,16 @@ const DashboardContainer = (props) => {
     };
 
     delete profileData.showSecurityQuestions;
+    delete profileData._id;
 
-    props.createProfile(profileData).then((res) => {
+    props.updateProfile(profileData).then((res) => {
       if (res.data !== undefined && res.status === 201) {
-        return props.history.push('/dashboard');
+        props.history.push('/dashboard');
       }
 
-      if (res.response.status === 409) {
-        setErrors((prevState) => ({
-          ...prevState,
-          email: 'email already in use, please login to continue'
-        }));
+      if (res.data !== undefined && res.status === 401) {
+        props.history.push('/login');
       }
-    });
-  };
-
-  const inputChange = (field, value) => {
-    setProfileValue({
-      ...profile,
-      [field]: value
     });
   };
 
@@ -79,16 +81,13 @@ const DashboardContainer = (props) => {
     <Dashboard
       showEditProfile={showEditProfile}
       toggleProfileEditCard={toggleProfileEditCard}
-    >
-      <Profile
-        errors={errors}
-        profile={profile}
-        inputChange={inputChange}
-        profileStatus={updatingProfile}
-        handleSubmit={handleSubmit}
-        setAvatarUrl={inputChange}
-      />
-    </Dashboard>
+      profile={profile}
+      errors={errors}
+      inputChange={inputChange}
+      profileStatus={updatingProfile}
+      handleSubmit={handleSubmit}
+      setAvatarUrl={inputChange}
+    />
   );
 };
 

@@ -11,6 +11,7 @@ import {
 } from '../atom';
 
 import { Button, Input, Avatar, SecurityQuestion } from '../molecules';
+import FlashMessages from '../molecules/FlashMessages';
 
 const questions = [
   'What is your oldest sibling’s middle name?',
@@ -44,7 +45,7 @@ const Profile = (props) => {
   return (
     <FormContainer>
       <h3>{carTitle}</h3>
-      <form onSubmit={handleSubmit}>
+      <form>
         <Avatar
           setAvatarUrl={setAvatarUrl}
           profile={profile}
@@ -78,7 +79,7 @@ const Profile = (props) => {
           labelText="Email"
         />
 
-        {props.showPasswordField && (
+        {profile.showPasswordField && (
           <>
             <Input
               type="password"
@@ -156,7 +157,7 @@ const Profile = (props) => {
             </InputGroupStyled>
           </>
         )}
-
+        <FlashMessages />
         <Button
           buttonText={
             (profileStatus && (
@@ -165,7 +166,7 @@ const Profile = (props) => {
             'Submit'
           }
           onClick={handleSubmit}
-          type="submit"
+          type="button"
         />
       </form>
     </FormContainer>

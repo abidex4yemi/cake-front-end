@@ -1,6 +1,11 @@
 import { combineReducers } from 'redux';
+import { reducer as flashReducer } from 'redux-flash';
+
 import { userReducer } from './userReducer';
 
-export default combineReducers({
-  data: userReducer
+const rootReducer = combineReducers({
+  data: userReducer,
+  flash: flashReducer
 });
+
+export default rootReducer;

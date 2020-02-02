@@ -10,7 +10,8 @@ export const SecurityQuestion = (props) => {
 
   const [userSelection, setUserSelection] = useState({
     question: '',
-    answer: ''
+    answer: '',
+    id: ''
   });
 
   useEffect(() => {
@@ -19,13 +20,35 @@ export const SecurityQuestion = (props) => {
 
   const handleQuestionChange = (evt) => {
     const question = evt.target.value;
+    const selectedIndex = evt.target.options.selectedIndex;
+    const optionId = evt.target.options[selectedIndex].getAttribute('data-key');
+    let id = '';
+
+    if (optionId) {
+      id = optionId;
+    }
 
     setShowInput(true);
 
     setUserSelection((prevState) => ({
       ...prevState,
-      question
+      question,
+      id
     }));
+  };
+
+  const renderSecurityQuestions = () => {
+    return (
+      <select onChange={handleQuestionChange}>
+        <option>Choose question...</option>
+        {questions.map(({ question, _id }) => (
+          <option key={question} value={question} data-key={_id ? _id : ''}>
+            {question}
+          </option>
+        ))}
+        ;
+      </select>
+    );
   };
 
   const inputChange = (field, value) => {
@@ -37,14 +60,7 @@ export const SecurityQuestion = (props) => {
 
   return (
     <StyledSelectContainer>
-      <select onChange={handleQuestionChange}>
-        <option>Choose question...</option>
-        {questions.map((question) => (
-          <option key={question} value={question}>
-            {question}
-          </option>
-        ))}
-      </select>
+      {renderSecurityQuestions()}
 
       {showInput && (
         <Input

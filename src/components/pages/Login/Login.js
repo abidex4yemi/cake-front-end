@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
+import { Link } from 'react-router-dom';
 import { Button, Input } from '../../molecules';
 import {
   ContainerStyled,
@@ -56,6 +57,9 @@ const Login = (props) => {
                 value={user.password}
                 labelText="Password"
               />
+              <StyledLoginLink to="/reset-password">
+                Forgot your password ?
+              </StyledLoginLink>
               <Button
                 buttonText={
                   (loginIn && (
@@ -104,4 +108,13 @@ const FormContainer = styled.div`
   button[type='submit'] {
     line-height: 20px;
   }
+`;
+
+const StyledLoginLink = styled(Link)`
+  display: block;
+  color: #306efe;
+  font-size: 1.5rem;
+  text-align: right;
+  margin: -5px 0 15px 0;
+  font-style: italic;
 `;

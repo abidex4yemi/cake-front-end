@@ -8,7 +8,6 @@ import thunk from 'redux-thunk';
 import { middleware as flashMiddleware } from 'redux-flash';
 
 import rootReducer from './reducers';
-import axiosInstance from '../api';
 import { setToken } from './middleware';
 
 const flashOptions = { timeout: 5000 };
@@ -28,7 +27,7 @@ export default () => {
     composeWithDevTools(
       applyMiddleware(
         ReduxPromise,
-        thunk.withExtraArgument(axiosInstance),
+        thunk,
         setToken,
         flashMiddleware(flashOptions)
       )

@@ -14,12 +14,12 @@ import { Button, Input, Avatar, SecurityQuestion } from '../molecules';
 import FlashMessages from '../molecules/FlashMessages';
 
 const questions = [
-  'What is your oldest sibling’s middle name?',
-  'What is your car’s license plate number?',
-  'What was your first car’s make and model?',
-  'What month and day is your anniversary?',
-  'What was your first car?',
-  'What is the middle name of your oldest child?'
+  { question: 'What is your oldest sibling’s middle name?' },
+  { question: 'What is your car’s license plate number?' },
+  { question: 'What was your first car’s make and model?' },
+  { question: 'What month and day is your anniversary?' },
+  { question: 'What was your first car?' },
+  { question: 'What is the middle name of your oldest child?' }
 ];
 
 /**

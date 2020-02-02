@@ -3,33 +3,7 @@ import styled from 'styled-components';
 import { ContainerStyled } from '../atom';
 import HeroImg from '../../asset/images/hero-image.jpg';
 import ServiceCard from '../molecules/ServiceCard';
-
-const services = [
-  {
-    id: 1,
-    description:
-      'Welcome to Tahoe South, where you’ll find Lake Tahoe, the largest alpine Lake in North America; deep and wide, bluer than blue and surrounded by the majestic Sierra Nevada Mountains.',
-    postedDate: '1 day ago'
-  },
-  {
-    id: 2,
-    description:
-      'Welcome to Tahoe South, where you’ll find Lake Tahoe, the largest alpine Lake in North America; deep and wide, bluer than blue and surrounded by the majestic Sierra Nevada Mountains.',
-    postedDate: '1 day ago'
-  },
-  {
-    id: 3,
-    description:
-      'Welcome to Tahoe South, where you’ll find Lake Tahoe, the largest alpine Lake in North America; deep and wide, bluer than blue and surrounded by the majestic Sierra Nevada Mountains.',
-    postedDate: '1 day ago'
-  },
-  {
-    id: 4,
-    description:
-      'Welcome to Tahoe South, where you’ll find Lake Tahoe, the largest alpine Lake in North America; deep and wide, bluer than blue and surrounded by the majestic Sierra Nevada Mountains.',
-    postedDate: '1 day ago'
-  }
-];
+import services from '../pages/services';
 
 /**
  * This is a dumb component with no logic
@@ -53,9 +27,10 @@ const Home = () => {
       </HeroContainerStyled>
 
       <ContainerStyled>
+        <StyledHeader>Places to Stay</StyledHeader>
         <MainWrapper>
-          {services.map((service) => (
-            <ServiceCard key={service.id} {...service} />
+          {services.map((service, index) => (
+            <ServiceCard key={index} {...service} />
           ))}
         </MainWrapper>
       </ContainerStyled>
@@ -84,7 +59,18 @@ const HeroContainerStyled = styled.div`
     margin: auto;
     line-height: 1.5;
     text-align: center;
+
+    @media screen and (max-width: 760px) {
+      width: 95%;
+    }
   }
+`;
+
+const StyledHeader = styled.p`
+  text-align: center;
+  margin: 40px 0 0 0;
+  font-size: 2em;
+  font-weight: bold;
 `;
 
 const MainWrapper = styled.section`
@@ -94,4 +80,10 @@ const MainWrapper = styled.section`
   min-height: 300px;
   flex-wrap: wrap;
   padding: 50px 0;
+
+  @media screen and (max-width: 720px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;

@@ -158,6 +158,13 @@ const Profile = (props) => {
           </>
         )}
         <FlashMessages />
+        {props.sessionExpired && (
+          <StyledSessionExpire>
+            <SmallStyled style={{ textAlign: 'center' }}>
+              {props.sessionExpired}
+            </SmallStyled>
+          </StyledSessionExpire>
+        )}
         <Button
           buttonText={
             (profileStatus && (
@@ -190,4 +197,9 @@ const FormContainer = styled.div`
   button[type='submit'] {
     line-height: 20px;
   }
+`;
+
+const StyledSessionExpire = styled.p`
+  text-align: center;
+  margin-bottom: 5px;
 `;

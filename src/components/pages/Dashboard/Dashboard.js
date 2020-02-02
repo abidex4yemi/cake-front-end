@@ -31,7 +31,8 @@ const Dashboard = (props) => {
     inputChange,
     profileStatus,
     handleSubmit,
-    setAvatarUrl
+    setAvatarUrl,
+    sessionExpired
   } = props;
 
   return (
@@ -69,6 +70,7 @@ const Dashboard = (props) => {
               profileStatus={profileStatus}
               handleSubmit={handleSubmit}
               setAvatarUrl={setAvatarUrl}
+              sessionExpired={sessionExpired}
             />
           )}
         </MainSection>

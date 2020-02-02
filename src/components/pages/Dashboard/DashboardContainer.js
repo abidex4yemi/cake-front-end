@@ -17,6 +17,8 @@ import Dashboard from './Dashboard';
 const DashboardContainer = (props) => {
   const { updatingProfile, user } = props.data;
 
+  const [sessionExpired, setSessionExpired] = useState('');
+
   const [profile, setProfileValue] = useState({
     firstName: '',
     lastName: '',
@@ -74,6 +76,15 @@ const DashboardContainer = (props) => {
       if (res.data !== undefined && res.status === 401) {
         props.history.push('/login');
       }
+
+      if (
+        res.response &&
+        res.response.data.errors.message === 'Token expired, login again.'
+      ) {
+        setSessionExpired('Session expired please login');
+
+        setTimeout(() => props.history.push('/login'), 3000);
+      }
     });
   };
 
@@ -87,6 +98,7 @@ const DashboardContainer = (props) => {
       profileStatus={updatingProfile}
       handleSubmit={handleSubmit}
       setAvatarUrl={inputChange}
+      sessionExpired={sessionExpired}
     />
   );
 };

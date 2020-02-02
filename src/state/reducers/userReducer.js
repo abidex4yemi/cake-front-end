@@ -4,14 +4,20 @@ import {
   LOGGED_IN,
   LOGIN_IN,
   UPDATE_PROFILE,
-  UPDATING_PROFILE
+  UPDATING_PROFILE,
+  FETCHING_SECURITY_QUESTIONS,
+  RESET_PASSWORD
 } from '../actions';
 
 const initialState = {
   user: null,
   creatingProfile: false,
   loginIn: false,
-  updatingProfile: false
+  updatingProfile: false,
+  fetchingSecurityQuestions: false,
+  userExistingSecurityQuestions: [],
+  passwordResetMessage: '',
+  resetting: false
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -42,6 +48,16 @@ export const userReducer = (state = initialState, action) => {
         loginIn: action.payload
       };
     case LOGGED_IN:
+      return {
+        ...state,
+        ...action.payload
+      };
+    case FETCHING_SECURITY_QUESTIONS:
+      return {
+        ...state,
+        ...action.payload
+      };
+    case RESET_PASSWORD:
       return {
         ...state,
         ...action.payload

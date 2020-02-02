@@ -26,7 +26,7 @@ export const Avatar = (props) => {
       .post(CLOUDINARY_URL, imageFile)
       .then((res) => {
         setAvatarUrl('avatar', res.data.secure_url);
-        setUploading((prevState) => !prevState);
+        setTimeout(() => setUploading((prevState) => !prevState), 3000);
       })
       .catch((err) => err);
   };

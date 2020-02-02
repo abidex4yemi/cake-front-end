@@ -5,7 +5,7 @@ import {
   dark,
   white,
   boxShadow,
-  medium_space,
+  normal_space,
   borderRadius,
   small_font_size
 } from '../atom';
@@ -17,10 +17,11 @@ import {
  * @returns {object}
  */
 const ServiceCard = (props) => {
-  const { description, postedDate } = props;
+  const { description, postedDate, imgSrc } = props;
 
   return (
     <ServiceCardStyled to="/details">
+      <img src={imgSrc} alt={description} />
       <p>{description}</p>
       <PostedDateStyled>{postedDate}</PostedDateStyled>
     </ServiceCardStyled>
@@ -31,9 +32,8 @@ export default ServiceCard;
 
 const ServiceCardStyled = styled(Link)`
   width: 300px;
-  height: 300px;
+  height: auto
   box-shadow: ${boxShadow};
-  padding: ${medium_space};
   background: ${white};
   border-radius: ${borderRadius};
   color: ${dark};
@@ -41,6 +41,20 @@ const ServiceCardStyled = styled(Link)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  p {
+    padding: ${normal_space};
+  }
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  @media screen and (max-width: 720px) {
+    width: 95%;
+    height: auto
+  }
 
   &:hover {
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -52,4 +66,5 @@ const PostedDateStyled = styled.p`
   color: rgba(0, 0, 0, 0.6);
   font-size: ${small_font_size};
   margin-bottom: 0.5rem;
+  padding: ${normal_space};
 `;

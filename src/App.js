@@ -11,6 +11,7 @@ import Home from './components/pages/Home';
 import Signup from './components/pages/Signup';
 import { Dashboard } from './components/pages/Dashboard';
 import { Login } from './components/pages/Login';
+import { ResetPassword } from './components/pages/ResetPassword';
 import requiresAuth from './components/HOC/requireAuth';
 
 const { store, persistor } = reduxStorePersisted();
@@ -28,8 +29,14 @@ const App = () => {
             path="/signup"
             render={(props) => <Signup {...props} />}
           />
+
           <Route exact path="/dashboard" component={requiresAuth(Dashboard)} />
           <Route exact path="/login" render={(props) => <Login {...props} />} />
+          <Route
+            exact
+            path="/reset-password"
+            render={(props) => <ResetPassword {...props} />}
+          />
 
           <Footer />
         </PersistGate>

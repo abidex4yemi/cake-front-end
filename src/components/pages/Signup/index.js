@@ -118,6 +118,8 @@ const Signup = (props) => {
           ...prevState,
           email: 'email already in use, please login to continue'
         }));
+
+        window.scrollTo(0, 0);
       }
     });
   };

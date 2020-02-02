@@ -95,6 +95,10 @@ const Signup = (props) => {
       thirdQuestion
     } = profile.securityQuestions;
 
+    delete firstQuestion.id;
+    delete secondQuestion.id;
+    delete thirdQuestion.id;
+
     const profileData = {
       ...profile,
       securityQuestions: [firstQuestion, secondQuestion, thirdQuestion]
